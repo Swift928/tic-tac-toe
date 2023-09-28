@@ -6,41 +6,222 @@ body{
     box-sizing: border-box;
 }
 
+.player-choice{
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    transition: opacity 0.7s ease-in-out;
+    position: absolute;
+    text-wrap: nowrap;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.player-choice button,
+form button{
+    font-size: 30px;
+    background-color: transparent;
+    border: 3px solid black;
+    padding: 5px 20px 5px 20px;
+    border-radius: 9px;
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2); 
+    transition: box-shadow 0.3s ease-in-out;
+}
+
+form button{
+    width: 65%;
+    margin-bottom: 25px;
+}
+
+.form-element {
+    width: 100%;
+}
+
+form label {
+    font-size: 35px;
+    margin-right: 5px;
+}
+
+.form-element:nth-child(2){
+    margin-bottom: auto;
+}
+
+.form-element:nth-child(1){
+    margin-bottom: 50px;
+}
+
+form input{
+    font-size: 30px;
+    background-color: transparent;
+    outline: none;
+    border: 3px solid black;
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2); 
+    transition: box-shadow 0.3s ease-in-out;
+    border-radius: 9px;
+    width: 80%;
+    padding: 3px 9px;
+    overflow: auto;
+}
+
+.player-name-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: opacity 0.7s ease-in-out;
+}
 
 .game-container{
-    background-color: brown;
+    background: linear-gradient(320deg, #ffcc00, #ff6600);
     height: 100vh;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
 }
 
-.game-board{
-    height: 200px;
-    width: 200px;
+#game-name{
+    text-align: center;
+    font-size: 3rem;
+}
+
+.game-name2{
+    position: absolute;
+    font-size: 1.5rem;
+    top: 5px;
+    left: 5px;
+    transform: translate(0, -100%);
+    transition: transform 0.7s ease-in-out;
+}
+
+.float-top-left {
+    transform: translate(0, 0);
+}
+
+.left-screen{
+    left: -150%;
+}
+
+.visible {
+    opacity: 1;
+}
+
+.hidden {
+    opacity: 0;
+}
+
+.name-bar{
+    position: fixed;
+    top: 10%;
+    font-size: 3em;
+    font-weight: 600;
+}
+
+.greeting-menu{
+    display: grid;
+    grid-template-rows: 150px 1fr;
+    justify-content: center;
+    height: 60%;
+    width: 50%;
+    border: 3px solid black;
+    border-radius: 9px; 
+    padding: 25px 0 10px 0;
+    position: absolute;
+    text-wrap: nowrap;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    transition: left 2s;
+}
+
+.game-board {
+    height: 60%;
+    width: 50%;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(3, 1fr);
+    border: 3px solid black;
+    border-radius: 9px;
+    transform: translate(150%, 0);
+    transition: transform 0.7s ease-in-out;
+}
+
+.right-screen{
+    transform: translate(0, 0);
+}
+
+.game-board div {
+    
+    display: flex;
+    font-size: 50px;
+    justify-content: center;
+    align-items: center;
 }
 
 .game-board > *:nth-child(1),
 .game-board > *:nth-child(2),
 .game-board > *:nth-child(3) {
-    border-bottom: 1px solid black;
+    border-bottom: 2px solid black;
 }
 
 .game-board > *:nth-child(7),
 .game-board > *:nth-child(8),
 .game-board > *:nth-child(9) {
-    border-top: 1px solid black;
+    border-top: 2px solid black;
 }
 
 .game-board > *:nth-child(2),
 .game-board > *:nth-child(5),
 .game-board > *:nth-child(8) {
-    border-left: 1px solid black;
-    border-right: 1px solid black;
+    border-left: 2px solid black;
+    border-right: 2px solid black;
 }
 
+.reset-button {
+    display: none;
+    position: absolute;
+    bottom: 10%;
+    margin-top: 100px;
+    font-size: 35px;
+    padding: 5px 20px;
+    background-color: transparent;
+    border: 3px solid black; 
+    border-radius: 5px; 
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2); 
+    transition: box-shadow 0.3s ease-in-out;
+}
 
+.reset-button:hover,
+.player-choice button:hover,
+form input:focus{
+    box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.4);
+}
 
+button {
+    cursor: pointer;
+}
+
+@media screen and (max-width: 655px) {
+    .greeting-menu, .game-board{
+        width: 80%;
+        height: 70%;
+    }
+
+    form input{
+        font-size: 20px;
+        width: 80%;
+    }
+
+    form label {
+        font-size: 25px;
+        margin-right: 0;
+    }
+
+    .reset-button{
+        bottom: 5%;
+    }
+
+    .name-bar{
+        top: 7%;
+    }
+}
