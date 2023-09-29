@@ -23,7 +23,6 @@ function board() {
         gameArray[row][col] = currentPlayer
     }
 
-
     let isGameOver = false;
 
     const gameResult = () => isGameOver;
@@ -31,7 +30,6 @@ function board() {
     let gameStatus = (name) => {
 
         let nameDiv = document.querySelector('.name-bar')
-        
         
             // Checks the rows
             for (let i=0; i < gameArray.length; i++) {
@@ -71,59 +69,90 @@ function board() {
                 nameDiv.innerHTML = 'Tie Game'
                 isGameOver = true
                 return
-        }
-            
-            
+        }       
     }
 
     newGame()
     return { newGame, recordMove, gameStatus, gameResult }
 }
 
-function gameControl(
-    playerOneName = 'Player 1',
-    playerTwoName = 'Player 2',
-) { 
+function gameControl() { 
     const gameArray = board()
+    let formEnterButton = document.getElementById('form-button')
+
+    function capitalFirstWord(value){
+        let words = value.split(' ')
     
-
-    const players = [
-        {
-          name: playerOneName,
-          piece: 'X'
-        },
-        {
-          name: playerTwoName,
-          piece: 'O'
+        let newString = words.map( word =>{
+            if (word.length === 0){
+                return
+            } else {
+                return word[0].toUpperCase() + word.slice(1).toLowerCase()
+            }
+        })
+        return newString.join(' ')
+    }
+    
+    class Player {
+        constructor(name, piece) {
+          this._name = capitalFirstWord(name);
+          this._piece = piece;
+          }
+      
+        get name() {
+          return this._name;
         }
-      ];
+      
+        get piece() {
+          return this._piece;
+        }
+    }
 
+    let players1;
+    let players2;
 
-    let activePlayer = players[0];
+    formEnterButton.addEventListener('click', (e) => {
+
+        let player1 = document.getElementById('X')
+        let player2 = document.getElementById('O')
+    
+        let name1 = player1.value.trim();
+        let name2 = player2.value.trim();
+
+        if (!name1 || !name2) {
+            alert('Please enter a name for both players.')
+        }
+
+        players1 = new Player(name1, 'X');
+        players2 = new Player(name2, 'O');
+
+        activePlayer = players1;
+    })
+
+    let activePlayer = players1;
 
     const switchPlayerTurn = () => {
-        activePlayer = activePlayer === players[0] ? players[1] : players[0];
+        activePlayer = activePlayer === players1 ? players2 : players1;
     };
-
-    
-
-    const getActivePlayer = () => activePlayer;
     
     let playRound = (element) => {
-        gameArray.recordMove(element, getActivePlayer().piece)
+        gameArray.recordMove(element, activePlayer.piece)
         gameArray.gameStatus(activePlayer.name)
         switchPlayerTurn()
     }
 
     let resetGame = () =>{
-        activePlayer = players[0]
+        activePlayer = players1
         gameArray.newGame()
     }
 
     let thisForm = () => gameArray.gameResult()
 
+    function displayChoice (element) {
+        element.innerHTML = (activePlayer.piece)
+    }
 
-    return {playRound, getActivePlayer, resetGame, thisForm }
+    return {playRound, resetGame, thisForm, displayChoice }
 }
 
 const gameBoy = (() => {
@@ -131,16 +160,8 @@ const gameBoy = (() => {
     const game = gameControl()
     const initialBoard = board()
 
-    
     const gameBoard = document.querySelector('.game-board')
     let items = document.querySelectorAll('.game-board div')
-
-    let displayChoice = (element) => {
-        if (!element.innerHTML){
-            element.innerHTML = game.getActivePlayer().piece
-        } else {return}
-    }
-
 
     let nameDiv = document.querySelector('.name-bar')
 
@@ -171,10 +192,8 @@ const gameBoy = (() => {
                 items.forEach((element, index)  => {
                     if (element === gameItem) {
                         
-                        if (element.innerHTML) {
-                            return
-                        } else {
-                            displayChoice(element)
+                        if (!element.innerHTML) {
+                            game.displayChoice(element)
                             game.playRound(index)
                         }
                     }
@@ -187,8 +206,6 @@ const gameBoy = (() => {
     clickListener()
 })()
 
-
-
 let gameSetUp = (() =>{
     let playerButtons = document.querySelectorAll('.player-choice button')
     let playerButtonContainer = document.querySelector('.player-choice')
@@ -198,9 +215,7 @@ let gameSetUp = (() =>{
     let board = document.querySelector('.game-board')
     let leftArrow = document.querySelector('.svg-button')
     let inputElements = document.querySelectorAll('input')
-    let player1 = document.getElementById('X')
-    let player2 = document.getElementById('O')
-    let formButton = document.getElementById('form-button')
+    
     let game = gameControl()
 
     playerButtons.forEach((button) =>{
@@ -223,22 +238,12 @@ let gameSetUp = (() =>{
         })
     })
 
-    // formButton.addEventListener('click', (e) => {
-        
-    
-    //     let name1 = player1.value;
-    //     let name2 = player2.value
-    //     // console.log(name2)
-    //     game.updateNames(name1, name2 )
-    // })
-
     namesContainer.addEventListener('submit', (e) => {
         e.preventDefault()
         greetingContainer.style.left = '-150%'
         board.classList.add('right-screen')
         
         floatGameName.classList.add('float-top-left')
-
     })
 
     leftArrow.addEventListener('click', () =>{
@@ -260,10 +265,6 @@ let gameSetUp = (() =>{
         }, 680);
     })
 
+
 })()
-
-
-
-
-
 

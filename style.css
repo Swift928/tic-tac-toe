@@ -6,6 +6,10 @@ body{
     box-sizing: border-box;
 }
 
+/* html, body {
+    transform: rotate(0deg);
+} */
+
 .player-choice{
     display: flex;
     flex-direction: column;
@@ -131,7 +135,7 @@ input::placeholder{
 }
 
 .name-bar{
-    position: fixed;
+    position: absolute;
     top: 10%;
     font-size: 3em;
     font-weight: 600;
