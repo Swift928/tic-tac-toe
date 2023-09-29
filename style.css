@@ -64,6 +64,10 @@ form input{
     overflow: auto;
 }
 
+input::placeholder{
+    color: rgb(48, 44, 44);
+}
+
 .player-name-container {
     display: flex;
     flex-direction: column;
@@ -83,6 +87,22 @@ form input{
 #game-name{
     text-align: center;
     font-size: 3rem;
+}
+
+#left-arrow {
+    height: 2rem;
+    width: auto;
+}
+
+.svg-button{
+    position: absolute;
+    background-color: transparent;  
+    max-height: min-content;
+    max-width: min-content;
+    border: none;
+    bottom: 5px;
+    left: 5px;
+    transition: opacity 0.7s ease-in-out;
 }
 
 .game-name2{

@@ -83,8 +83,9 @@ function board() {
 function gameControl(
     playerOneName = 'Player 1',
     playerTwoName = 'Player 2',
-) {
+) { 
     const gameArray = board()
+    
 
     const players = [
         {
@@ -97,11 +98,14 @@ function gameControl(
         }
       ];
 
+
     let activePlayer = players[0];
 
     const switchPlayerTurn = () => {
         activePlayer = activePlayer === players[0] ? players[1] : players[0];
     };
+
+    
 
     const getActivePlayer = () => activePlayer;
     
@@ -117,6 +121,7 @@ function gameControl(
     }
 
     let thisForm = () => gameArray.gameResult()
+
 
     return {playRound, getActivePlayer, resetGame, thisForm }
 }
@@ -191,16 +196,24 @@ let gameSetUp = (() =>{
     let floatGameName = document.querySelector('.game-name2')
     let greetingContainer = document.querySelector('.greeting-menu')
     let board = document.querySelector('.game-board')
+    let leftArrow = document.querySelector('.svg-button')
+    let inputElements = document.querySelectorAll('input')
+    let player1 = document.getElementById('X')
+    let player2 = document.getElementById('O')
+    let formButton = document.getElementById('form-button')
+    let game = gameControl()
 
     playerButtons.forEach((button) =>{
         button.addEventListener('click', (e) =>{
             if (e.target.innerHTML === 'Two Player'){
                 playerButtonContainer.classList.remove('visible')
                 playerButtonContainer.classList.add('hidden')
-
                 
                 namesContainer.classList.remove('hidden')
                 namesContainer.classList.add('visible')
+
+                leftArrow.classList.remove('hidden')
+                leftArrow.classList.add('visible')
 
                 setTimeout(()=>{
                     playerButtonContainer.style.display='none'
@@ -210,12 +223,41 @@ let gameSetUp = (() =>{
         })
     })
 
+    // formButton.addEventListener('click', (e) => {
+        
+    
+    //     let name1 = player1.value;
+    //     let name2 = player2.value
+    //     // console.log(name2)
+    //     game.updateNames(name1, name2 )
+    // })
+
     namesContainer.addEventListener('submit', (e) => {
         e.preventDefault()
         greetingContainer.style.left = '-150%'
         board.classList.add('right-screen')
         
         floatGameName.classList.add('float-top-left')
+
+    })
+
+    leftArrow.addEventListener('click', () =>{
+        playerButtonContainer.classList.remove('hidden')
+        playerButtonContainer.classList.add('visible')
+        
+        namesContainer.classList.remove('visible')
+        namesContainer.classList.add('hidden')
+
+        leftArrow.classList.remove('visible')
+        leftArrow.classList.add('hidden')
+
+        inputElements.forEach((input) => {
+            input.value = ""
+        })
+
+        setTimeout(()=>{
+            playerButtonContainer.style.display='flex'
+        }, 680);
     })
 
 })()

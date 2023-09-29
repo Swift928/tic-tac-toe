@@ -17,21 +17,22 @@
 
         <div class="greeting-menu">
             <h1 id="game-name">Tic-Tac-Toe</h1>
+            <button class="svg-button hidden"><svg id="left-arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M2,12A10,10 0 0,1 12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12M18,11H10L13.5,7.5L12.08,6.08L6.16,12L12.08,17.92L13.5,16.5L10,13H18V11Z" /></svg></button>
             
 
             <form action="" class="player-name-container hidden">
 
                 <div class="form-element">
                     <label for="X">X</label>
-                    <input type="text" id="X">
+                    <input type="text" id="X" placeholder="Enter Name">
                 </div>
 
                 <div class="form-element">
                     <label for="O">O</label>
-                    <input type="text" id="O">
+                    <input type="text" id="O" placeholder="Enter Name">
                 </div>
                 
-                <button>Enter</button>
+                <button id="form-button">Enter</button>
             </form>
 
             <div class="player-choice visible">
