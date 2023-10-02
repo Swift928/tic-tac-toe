@@ -16,12 +16,28 @@ function board() {
         }
     }
 
-    let recordMove = (index, currentPlayer) =>{
+    let recordMove = (index, currentPlayerPiece) =>{
         let row = Math.floor(index / 3);
         let col = index % 3;
 
-        gameArray[row][col] = currentPlayer
+        gameArray[row][col] = currentPlayerPiece
     }
+
+     let updateScreen = (dataArray) => {
+        let counter = 0;
+
+          for (let i=0; i<3; i++){
+            for (let z=0; z<3; z++){
+                if (isNaN(gameArray[i][z])){
+                    gameSetUp.items.forEach((element, index) =>{
+                        if (index === counter)
+                        element.innerHTML = gameArray[i][z]
+                    })
+                }   
+                counter++
+            }
+        }
+      }
 
     let isGameOver = false;
 
@@ -72,13 +88,15 @@ function board() {
         }       
     }
 
+    let getGameBoard = () => gameArray
+
     newGame()
-    return { newGame, recordMove, gameStatus, gameResult }
+    return { newGame, recordMove, gameStatus, gameResult, getGameBoard, updateScreen }
 }
 
-function gameControl() { 
-    const gameArray = board()
-    let formEnterButton = document.getElementById('form-button')
+let playerManipulation = (() => {
+    
+    const gameBoard = board();
 
     function capitalFirstWord(value){
         let words = value.split(' ')
@@ -92,7 +110,7 @@ function gameControl() {
         })
         return newString.join(' ')
     }
-    
+
     class Player {
         constructor(name, piece) {
           this._name = capitalFirstWord(name);
@@ -108,11 +126,31 @@ function gameControl() {
         }
     }
 
+    class AiPlayer {
+        constructor() {
+            this._name = 'Ai';
+            this._piece = 'O';
+        }
+
+        get name(){
+            return this._name
+        }
+
+        get piece(){
+            return this._piece
+        }
+    }
+
+    let formEnterButton = document.getElementById('form-button')
+
     let players1;
     let players2;
+    let Ai;
+    let two_Player = false;
 
     formEnterButton.addEventListener('click', (e) => {
 
+        if (two_Player) {
         let player1 = document.getElementById('X')
         let player2 = document.getElementById('O')
     
@@ -127,78 +165,162 @@ function gameControl() {
         players2 = new Player(name2, 'O');
 
         activePlayer = players1;
-    })
 
+        } else {
+
+            let player1 = document.getElementById('X')
+            let name1 = player1.value.trim();
+
+            if (!name1) {
+                alert('Please enter a name.')
+            }
+
+            players1 = new Player(name1, 'X');
+
+            activePlayer = players1;
+
+            Ai = new AiPlayer()
+        }
+
+    })
+    
     let activePlayer = players1;
 
+    let getActivePlayer = () => activePlayer;
+    let getIsTwoPlayer = () => two_Player;
+    let newGamePosition = () => activePlayer = players1
+    let getAi = () => Ai;
+
     const switchPlayerTurn = () => {
-        activePlayer = activePlayer === players1 ? players2 : players1;
+        if(gameBoard.gameResult()){
+            return
+        }
+
+        if (two_Player) {
+            activePlayer = activePlayer === players1 ? players2 : players1;
+        } else  {
+            activePlayer = activePlayer === players1 ? Ai : players1; 
+
+            if (activePlayer.name === Ai.name) {
+                console.log('AI is thinking...');
+                gameControl().makeMove(gameBoard.getGameBoard());
+                gameBoard.gameStatus(Ai.name);
+                switchPlayerTurn();
+            }    
+        }
     };
-    
-    let playRound = (element) => {
-        gameArray.recordMove(element, activePlayer.piece)
-        gameArray.gameStatus(activePlayer.name)
-        switchPlayerTurn()
+
+    const switchPlayerCount = () =>{
+        two_Player = two_Player === false ? true : false
+    }
+
+    return {getActivePlayer, 
+        switchPlayerCount, 
+        switchPlayerTurn, 
+        newGamePosition, 
+        getIsTwoPlayer,
+        getAi,
+        gameBoard}
+})()
+
+function gameControl() { 
+
+    let activePlayer = playerManipulation.getActivePlayer
+    let gameBoard = playerManipulation.gameBoard
+
+    let playRound = (index) => {
+        if (!isGameFinished()) {
+            gameBoard.recordMove(index, activePlayer().piece);
+            console.log(gameBoard.getGameBoard())
+            gameBoard.gameStatus(activePlayer().name);
+            playerManipulation.switchPlayerTurn();
+            console.log('heelo')
+        }
+    };
+
+    let  makeMove = (gameArray) => {
+        console.log(gameArray)
+
+        let empty = []
+        let counter = 0
+
+        for (let i=0; i<3; i++){
+            for (let z=0; z<3; z++){
+                if (!isNaN(gameArray[i][z])){
+                    empty.push(counter)
+                }   
+                counter++
+            }
+        }
+        console.log(empty)
+        
+        if (empty.length > 0){
+            let randomIndex = Math.floor(Math.random() * empty.length);
+            let move = empty[randomIndex];
+
+            console.log(randomIndex)
+            gameBoard.recordMove(move, playerManipulation.getAi().piece)
+            gameBoard.updateScreen()
+            console.log(gameBoard.getGameBoard())
+        } else {
+            return -1
+        }
     }
 
     let resetGame = () =>{
-        activePlayer = players1
-        gameArray.newGame()
+        playerManipulation.newGamePosition()
+        gameBoard.newGame()
     }
 
-    let thisForm = () => gameArray.gameResult()
+    let isGameFinished = () => gameBoard.gameResult()
 
     function displayChoice (element) {
-        element.innerHTML = (activePlayer.piece)
+        element.innerHTML = (playerManipulation.getActivePlayer().piece)
     }
 
-    return {playRound, resetGame, thisForm, displayChoice }
+    return {playRound, 
+            resetGame, 
+            isGameFinished, 
+            displayChoice, 
+            gameBoard, 
+            makeMove}
 }
 
 const gameBoy = (() => {
 
     const game = gameControl()
-    const initialBoard = board()
 
     const gameBoard = document.querySelector('.game-board')
-    let items = document.querySelectorAll('.game-board div')
-
     let nameDiv = document.querySelector('.name-bar')
 
     const clickListener = () =>{
-
-        let resetButton = document.querySelector('.reset-button')
-
         document.addEventListener('click', (e) =>{
 
-            if (resetButton.contains(e.target)) {
+            if (gameSetUp.resetButton.contains(e.target)) {
 
-                resetButton.style.display = 'none'
+                gameSetUp.resetButton.style.display = 'none'
                 game.resetGame()
-                items.forEach(item => item.innerHTML='')
+                gameSetUp.items.forEach(item => item.innerHTML='')
                 nameDiv.innerHTML=''
             }
 
-            if (game.thisForm()) {
-
+            if (game.isGameFinished()) {
                 return
-
-            } else if (gameBoard && gameBoard.contains(e.target)) {
-                
-                let gameItem = e.target.closest('div')
-
-                resetButton.style.display = 'block'
-        
-                items.forEach((element, index)  => {
-                    if (element === gameItem) {
-                        
-                        if (!element.innerHTML) {
-                            game.displayChoice(element)
-                            game.playRound(index)
+            } else {
+                if (gameBoard && gameBoard.contains(e.target)) {
+                    
+                    let gameItem = e.target.closest('div')
+                    gameSetUp.resetButton.style.display = 'block'
+                    
+                    gameSetUp.items.forEach((element, index)  => {
+                        if (element === gameItem) {
+                            if (!element.innerHTML) {
+                                game.displayChoice(element)
+                                game.playRound(index)
+                            }
                         }
-                    }
-                })
-        
+                    })
+                }
             }
         })
     } 
@@ -206,7 +328,9 @@ const gameBoy = (() => {
     clickListener()
 })()
 
+
 let gameSetUp = (() =>{
+    let resetButton = document.querySelector('.reset-button')
     let playerButtons = document.querySelectorAll('.player-choice button')
     let playerButtonContainer = document.querySelector('.player-choice')
     let namesContainer = document.querySelector('.player-name-container')
@@ -215,12 +339,18 @@ let gameSetUp = (() =>{
     let board = document.querySelector('.game-board')
     let leftArrow = document.querySelector('.svg-button')
     let inputElements = document.querySelectorAll('input')
+    let items = document.querySelectorAll('.game-board div')
     
     let game = gameControl()
 
     playerButtons.forEach((button) =>{
         button.addEventListener('click', (e) =>{
             if (e.target.innerHTML === 'Two Player'){
+                playerManipulation.switchPlayerCount()
+
+                let player_2 = document.getElementById('O')
+                player_2.setAttribute('required', 'required')
+
                 playerButtonContainer.classList.remove('visible')
                 playerButtonContainer.classList.add('hidden')
                 
@@ -233,7 +363,25 @@ let gameSetUp = (() =>{
                 setTimeout(()=>{
                     playerButtonContainer.style.display='none'
                 }, 680);
+            } else if (e.target.innerHTML === 'Single Player') {
+
+                let player2 = document.querySelector('.player-2');
+                player2.style.display = 'none';
+                let player_2 = document.getElementById('O')
+                player_2.removeAttribute('required')
+
+                playerButtonContainer.classList.remove('visible')
+                playerButtonContainer.classList.add('hidden')
                 
+                namesContainer.classList.remove('hidden')
+                namesContainer.classList.add('visible')
+
+                leftArrow.classList.remove('hidden')
+                leftArrow.classList.add('visible')
+
+                setTimeout(()=>{
+                    playerButtonContainer.style.display='none'
+                }, 680);
             }
         })
     })
@@ -247,6 +395,9 @@ let gameSetUp = (() =>{
     })
 
     leftArrow.addEventListener('click', () =>{
+
+        let player2 = document.querySelector('.player-2');
+
         playerButtonContainer.classList.remove('hidden')
         playerButtonContainer.classList.add('visible')
         
@@ -261,10 +412,11 @@ let gameSetUp = (() =>{
         })
 
         setTimeout(()=>{
-            playerButtonContainer.style.display='flex'
+            playerButtonContainer.style.display='flex';
+            player2.style.display = 'revert'
         }, 680);
     })
 
-
+    return {items, resetButton}
 })()
 
