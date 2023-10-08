@@ -79,6 +79,7 @@ input::placeholder{
 .game-container{
     background: linear-gradient(320deg, #ffcc00, #ff6600);
     height: 100vh;
+    width: 100vw;
     display: flex;
     flex-direction: column;
     align-items: center;

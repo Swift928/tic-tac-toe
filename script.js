@@ -202,9 +202,10 @@ let playerManipulation = (() => {
             activePlayer = activePlayer === players1 ? Ai : players1; 
 
             if (activePlayer.name === Ai.name) {
+                setTimeout(()=>{
                 gameControl().makeMove(gameBoard.getGameBoard());
                 gameBoard.gameStatus(Ai.name);
-                switchPlayerTurn();
+                switchPlayerTurn()}, 500);
             }    
         }
     };
