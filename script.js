@@ -202,7 +202,6 @@ let playerManipulation = (() => {
             activePlayer = activePlayer === players1 ? Ai : players1; 
 
             if (activePlayer.name === Ai.name) {
-                console.log('AI is thinking...');
                 gameControl().makeMove(gameBoard.getGameBoard());
                 gameBoard.gameStatus(Ai.name);
                 switchPlayerTurn();
@@ -231,15 +230,12 @@ function gameControl() {
     let playRound = (index) => {
         if (!isGameFinished()) {
             gameBoard.recordMove(index, activePlayer().piece);
-            console.log(gameBoard.getGameBoard())
             gameBoard.gameStatus(activePlayer().name);
             playerManipulation.switchPlayerTurn();
-            console.log('heelo')
         }
     };
 
     let  makeMove = (gameArray) => {
-        console.log(gameArray)
 
         let empty = []
         let counter = 0
@@ -252,16 +248,13 @@ function gameControl() {
                 counter++
             }
         }
-        console.log(empty)
         
         if (empty.length > 0){
             let randomIndex = Math.floor(Math.random() * empty.length);
             let move = empty[randomIndex];
 
-            console.log(randomIndex)
             gameBoard.recordMove(move, playerManipulation.getAi().piece)
             gameBoard.updateScreen()
-            console.log(gameBoard.getGameBoard())
         } else {
             return -1
         }
