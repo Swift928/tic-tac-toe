@@ -241,7 +241,7 @@ button {
     }
 
     .reset-button {
-        bottom: 5%;
+        bottom: 1em;
     }
 
     .name-bar {
