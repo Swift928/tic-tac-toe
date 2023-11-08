@@ -168,10 +168,6 @@ let playerManipulation = (() => {
             let name1 = player1.value.trim();
             let name2 = player2.value.trim();
 
-            if (!name1 || !name2) {
-                alert('Please enter a name for both players.');
-            }
-
             players1 = new Player(name1, 'X');
             players2 = new Player(name2, 'O');
 
@@ -179,10 +175,6 @@ let playerManipulation = (() => {
         } else {
             let player1 = document.getElementById('X');
             let name1 = player1.value.trim();
-
-            if (!name1) {
-                alert('Please enter a name.');
-            }
 
             players1 = new Player(name1, 'X');
 

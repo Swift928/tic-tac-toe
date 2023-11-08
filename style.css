@@ -230,14 +230,18 @@ button {
 @media screen and (-webkit-min-device-pixel-ratio: 0) {
     button {
         color: black;
+        text-wrap: nowrap;
     }
 }
 
-@media screen and (max-width: 655px) {
-    .greeting-menu,
+@media screen and (max-width: 768px) {
     .game-board {
         width: 80%;
-        /* height: 70%; */
+    }
+
+    .greeting-menu {
+        height: 60%;
+        width: 70%;
     }
 
     .reset-button {
