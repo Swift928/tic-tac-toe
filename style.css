@@ -4,7 +4,11 @@ body {
     padding: 0;
     margin: 0;
     box-sizing: border-box;
-    overflow: hidden;
+    /* overflow: hidden; */
+}
+
+body {
+    min-height: 100vh;
 }
 
 .player-choice {
@@ -235,10 +239,9 @@ button {
         width: 80%;
         height: 70%;
     }
-    @media screen and (-webkit-min-device-pixel-ratio: 0) {
-        .reset-button {
-            bottom: 1rem;
-        }
+
+    .reset-button {
+        bottom: 1rem;
     }
 
     form input {
