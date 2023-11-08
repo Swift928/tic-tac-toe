@@ -1,13 +1,13 @@
 *,
 html,
-body{
+body {
     padding: 0;
     margin: 0;
     box-sizing: border-box;
     overflow: hidden;
 }
 
-.player-choice{
+.player-choice {
     display: flex;
     flex-direction: column;
     gap: 25px;
@@ -20,18 +20,19 @@ body{
 }
 
 .player-choice button,
-form button{
+form button {
     font-size: 30px;
     background-color: transparent;
     border: 3px solid black;
     padding: 5px 20px 5px 20px;
     border-radius: 9px;
-    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2); 
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
     transition: box-shadow 0.3s ease-in-out;
 }
 
-form button{
+form button {
     width: 65%;
+    margin-top: auto;
     margin-bottom: 25px;
 }
 
@@ -44,20 +45,20 @@ form label {
     margin-right: 5px;
 }
 
-.form-element:nth-child(2){
+.form-element:nth-child(2) {
     margin-bottom: auto;
 }
 
-.form-element:nth-child(1){
+.form-element:nth-child(1) {
     margin-bottom: 50px;
 }
 
-form input{
-    font-size: 30px;
+form input {
+    font-size: 2rem;
     background-color: transparent;
     outline: none;
     border: 3px solid black;
-    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2); 
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
     transition: box-shadow 0.3s ease-in-out;
     border-radius: 9px;
     width: 80%;
@@ -65,7 +66,7 @@ form input{
     overflow: auto;
 }
 
-input::placeholder{
+input::placeholder {
     color: rgb(48, 44, 44);
 }
 
@@ -76,7 +77,7 @@ input::placeholder{
     transition: opacity 0.7s ease-in-out;
 }
 
-.game-container{
+.game-container {
     background: linear-gradient(320deg, #ffcc00, #ff6600);
     height: 100vh;
     width: 100vw;
@@ -86,7 +87,7 @@ input::placeholder{
     justify-content: center;
 }
 
-#game-name{
+#game-name {
     text-align: center;
     font-size: 3rem;
 }
@@ -96,9 +97,9 @@ input::placeholder{
     width: auto;
 }
 
-.svg-button{
+.svg-button {
     position: absolute;
-    background-color: transparent;  
+    background-color: transparent;
     max-height: min-content;
     max-width: min-content;
     border: none;
@@ -107,7 +108,7 @@ input::placeholder{
     transition: opacity 0.7s ease-in-out;
 }
 
-.game-name2{
+.game-name2 {
     position: absolute;
     font-size: 1.5rem;
     top: 5px;
@@ -120,7 +121,7 @@ input::placeholder{
     transform: translate(0, 0);
 }
 
-.left-screen{
+.left-screen {
     left: -150%;
 }
 
@@ -132,21 +133,21 @@ input::placeholder{
     opacity: 0;
 }
 
-.name-bar{
+.name-bar {
     position: absolute;
     top: 10%;
     font-size: 3em;
     font-weight: 600;
 }
 
-.greeting-menu{
+.greeting-menu {
     display: grid;
-    grid-template-rows: 150px 1fr;
+
     justify-content: center;
     height: 60%;
     width: 50%;
     border: 3px solid black;
-    border-radius: 9px; 
+    border-radius: 9px;
     padding: 25px 0 10px 0;
     position: absolute;
     text-wrap: nowrap;
@@ -168,12 +169,11 @@ input::placeholder{
     transition: transform 0.7s ease-in-out;
 }
 
-.right-screen{
+.right-screen {
     transform: translate(0, 0);
 }
 
 .game-board div {
-    
     display: flex;
     font-size: 50px;
     justify-content: center;
@@ -207,15 +207,15 @@ input::placeholder{
     font-size: 35px;
     padding: 5px 20px;
     background-color: transparent;
-    border: 3px solid black; 
-    border-radius: 5px; 
-    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2); 
+    border: 3px solid black;
+    border-radius: 5px;
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
     transition: box-shadow 0.3s ease-in-out;
 }
 
 .reset-button:hover,
 .player-choice button:hover,
-form input:focus{
+form input:focus {
     box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.4);
 }
 
@@ -224,13 +224,14 @@ button {
 }
 
 @media screen and (max-width: 655px) {
-    .greeting-menu, .game-board{
+    .greeting-menu,
+    .game-board {
         width: 80%;
         height: 70%;
     }
 
-    form input{
-        font-size: 20px;
+    form input {
+        font-size: 1.6rem;
         width: 80%;
     }
 
@@ -239,11 +240,11 @@ button {
         margin-right: 0;
     }
 
-    .reset-button{
+    .reset-button {
         bottom: 5%;
     }
 
-    .name-bar{
+    .name-bar {
         top: 7%;
     }
 }

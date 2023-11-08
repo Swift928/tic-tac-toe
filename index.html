@@ -1,62 +1,73 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="./style.css">
-    <script src="./script.js" defer></script>
-</head>
-<body>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Tic-Tac-Toe</title>
+        <link rel="stylesheet" href="./style.css" />
+        <script src="./script.js" defer></script>
+    </head>
+    <body>
+        <div class="game-container">
+            <h1 class="game-name2">Tic-Tac-Toe</h1>
+            <div class="name-bar"></div>
 
+            <div class="greeting-menu">
+                <h1 id="game-name">Tic-Tac-Toe</h1>
+                <button class="svg-button hidden">
+                    <svg
+                        id="left-arrow"
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                    >
+                        <path
+                            d="M2,12A10,10 0 0,1 12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12M18,11H10L13.5,7.5L12.08,6.08L6.16,12L12.08,17.92L13.5,16.5L10,13H18V11Z"
+                        />
+                    </svg>
+                </button>
 
-    <div class="game-container">
-        <h1 class="game-name2">Tic-Tac-Toe</h1>
-        <div class="name-bar"></div>
-            
+                <form action="" class="player-name-container hidden">
+                    <div class="form-element">
+                        <label for="X">X</label>
+                        <input
+                            type="text"
+                            id="X"
+                            placeholder="Enter Name"
+                            required
+                        />
+                    </div>
 
-        <div class="greeting-menu">
-            <h1 id="game-name">Tic-Tac-Toe</h1>
-            <button class="svg-button hidden"><svg id="left-arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M2,12A10,10 0 0,1 12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12M18,11H10L13.5,7.5L12.08,6.08L6.16,12L12.08,17.92L13.5,16.5L10,13H18V11Z" /></svg></button>
-            
+                    <div class="form-element player-2">
+                        <label for="O">O</label>
+                        <input
+                            type="text"
+                            id="O"
+                            placeholder="Enter Name"
+                            required
+                        />
+                    </div>
 
-            <form action="" class="player-name-container hidden">
+                    <button id="form-button">Enter</button>
+                </form>
 
-                <div class="form-element">
-                    <label for="X">X</label>
-                    <input type="text" id="X" placeholder="Enter Name" required>
+                <div class="player-choice visible">
+                    <button>Single Player</button>
+                    <button>Two Player</button>
                 </div>
-
-                <div class="form-element player-2">
-                    <label for="O">O</label>
-                    <input type="text" id="O" placeholder="Enter Name" required>
-                </div>
-                
-                <button id="form-button">Enter</button>
-            </form>
-
-            <div class="player-choice visible">
-                <button>Single Player</button>
-                <button>Two Player</button>
             </div>
 
-            
+            <div class="game-board">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+            <button class="reset-button">Reset</button>
         </div>
-
-        <div class="game-board">
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-        </div>
-        <button class="reset-button">
-            Reset
-        </button>
-    </div>
-</body>
+    </body>
 </html>
