@@ -12,6 +12,10 @@ html {
     height: 100%;
 }
 
+body {
+    background: linear-gradient(320deg, #ffcc00, #ff6600);
+}
+
 .player-choice {
     display: flex;
     flex-direction: column;
@@ -83,7 +87,7 @@ input::placeholder {
 }
 
 .game-container {
-    background: linear-gradient(320deg, #ffcc00, #ff6600);
+    /* background: linear-gradient(320deg, #ffcc00, #ff6600); */
     height: inherit;
     width: auto;
     display: flex;
@@ -230,7 +234,10 @@ button {
 @media screen and (-webkit-min-device-pixel-ratio: 0) {
     button {
         color: black;
-        text-wrap: nowrap;
+    }
+
+    .player-choice button {
+        width: 100%;
     }
 }
 
