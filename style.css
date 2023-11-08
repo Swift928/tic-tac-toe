@@ -12,10 +12,6 @@ html {
     height: 100%;
 }
 
-body {
-    background: linear-gradient(320deg, #ffcc00, #ff6600);
-}
-
 .player-choice {
     display: flex;
     flex-direction: column;
@@ -87,7 +83,7 @@ input::placeholder {
 }
 
 .game-container {
-    /* background: linear-gradient(320deg, #ffcc00, #ff6600); */
+    background: linear-gradient(320deg, #ffcc00, #ff6600);
     height: inherit;
     width: auto;
     display: flex;
@@ -237,18 +233,16 @@ button {
     }
 
     .player-choice button {
+        font-size: 1.6rem;
         width: 100%;
     }
 }
 
 @media screen and (max-width: 768px) {
+    .greeting-menu,
     .game-board {
+        height: 65%;
         width: 80%;
-    }
-
-    .greeting-menu {
-        height: 60%;
-        width: 70%;
     }
 
     .reset-button {
@@ -267,5 +261,6 @@ button {
 
     .name-bar {
         top: 7%;
+        font-size: 2.7rem;
     }
 }
