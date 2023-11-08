@@ -83,8 +83,8 @@ input::placeholder {
 
 .game-container {
     background: linear-gradient(320deg, #ffcc00, #ff6600);
-    height: 100vh;
-    width: 100vw;
+    height: inherit;
+    width: auto;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -146,7 +146,6 @@ input::placeholder {
 
 .greeting-menu {
     display: grid;
-
     justify-content: center;
     height: 60%;
     width: 50%;
