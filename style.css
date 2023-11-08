@@ -7,8 +7,9 @@ body {
     overflow: hidden;
 }
 
-body {
-    height: 100vh;
+body,
+html {
+    height: 100%;
 }
 
 .player-choice {
@@ -236,7 +237,7 @@ button {
     .greeting-menu,
     .game-board {
         width: 80%;
-        height: 70%;
+        /* height: 70%; */
     }
 
     .reset-button {
