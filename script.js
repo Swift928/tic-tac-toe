@@ -156,8 +156,6 @@ let playerManipulation = (() => {
         }
     }
 
-    let formEnterButton = document.getElementById('form-button');
-
     let players1;
     let players2;
     let Computer;
@@ -172,6 +170,8 @@ let playerManipulation = (() => {
             .join('<br>');
     };
 
+    let formEnterButton = document.getElementById('form-button');
+
     formEnterButton.addEventListener('click', () => {
         if (twoPlayer) {
             let player1 = document.getElementById('X');
@@ -183,6 +183,11 @@ let playerManipulation = (() => {
             if (!name1 || !name2) {
                 return;
             }
+
+            document.body.style.pointerEvents = 'none';
+            setTimeout(() => {
+                document.body.style.pointerEvents = 'auto';
+            }, 700);
 
             scores.push({ name: capitalFirstWord(name1), score: 0 });
             scores.push({ name: capitalFirstWord(name2), score: 0 });
@@ -200,6 +205,11 @@ let playerManipulation = (() => {
             if (!name1) {
                 return;
             }
+
+            document.body.style.pointerEvents = 'none';
+            setTimeout(() => {
+                document.body.style.pointerEvents = 'auto';
+            }, 700);
 
             scores.push({ name: capitalFirstWord(name1), score: 0 });
             scores.push({ name: 'Computer', score: 0 });
@@ -241,7 +251,9 @@ let playerManipulation = (() => {
             activePlayer = activePlayer === players1 ? Computer : players1;
 
             if (activePlayer.name === Computer.name) {
+                document.body.style.pointerEvents = 'none';
                 setTimeout(() => {
+                    document.body.style.pointerEvents = 'auto';
                     gameControl().makeMove(gameBoard.getGameBoard());
                     gameBoard.gameStatus(Computer.name);
                     switchPlayerTurn();
