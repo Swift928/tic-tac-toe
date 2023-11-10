@@ -126,7 +126,17 @@ input::placeholder {
 }
 
 .game-name2 {
+    cursor: pointer;
     left: 5px;
+    text-shadow: 3px 4px 4px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease-in-out, text-shadow 0.3s ease-in-out;
+}
+
+.game-name2:hover {
+    text-decoration: underline;
+    cursor: pointer;
+    transform: scale(1.05);
+    text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.4);
 }
 
 .float-top {

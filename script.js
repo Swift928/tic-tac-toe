@@ -185,7 +185,7 @@ let playerManipulation = (() => {
             }
 
             scores.push({ name: capitalFirstWord(name1), score: 0 });
-            scores.push({ name: name2, score: 0 });
+            scores.push({ name: capitalFirstWord(name2), score: 0 });
 
             updateScores();
 
