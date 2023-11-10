@@ -53,8 +53,9 @@ function board() {
                 rowItems.every((item) => item === rowItems[0]) &&
                 isNaN(rowItems[0])
             ) {
-                isGameOver = true;
                 nameDiv.innerHTML = `${name} Wins`;
+                playerManipulation.updateScoresAfterWin(name);
+                isGameOver = true;
                 return;
             }
         }
@@ -64,6 +65,7 @@ function board() {
             let col = gameArray.map((item) => item[i]);
             if (col.every((item) => item === col[0]) && isNaN(col[0])) {
                 nameDiv.innerHTML = `${name} Wins`;
+                playerManipulation.updateScoresAfterWin(name);
                 isGameOver = true;
                 return;
             }
@@ -79,6 +81,7 @@ function board() {
                 isNaN(diagonal2[0]))
         ) {
             nameDiv.innerHTML = `${name} Wins`;
+            playerManipulation.updateScoresAfterWin(name);
             isGameOver = true;
             return;
         }
@@ -157,16 +160,34 @@ let playerManipulation = (() => {
 
     let players1;
     let players2;
-    let Ai;
-    let two_Player = false;
+    let Computer;
+    let twoPlayer = false;
+    let scores = [];
 
-    formEnterButton.addEventListener('click', (e) => {
-        if (two_Player) {
+    let updateScores = () => {
+        gameSetUp.floatScoreBoard.innerHTML = scores
+            .map((item) => {
+                return `${item.name}: ${item.score}`;
+            })
+            .join('<br>');
+    };
+
+    formEnterButton.addEventListener('click', () => {
+        if (twoPlayer) {
             let player1 = document.getElementById('X');
             let player2 = document.getElementById('O');
 
             let name1 = player1.value.trim();
             let name2 = player2.value.trim();
+
+            if (!name1 || !name2) {
+                return;
+            }
+
+            scores.push({ name: capitalFirstWord(name1), score: 0 });
+            scores.push({ name: name2, score: 0 });
+
+            updateScores();
 
             players1 = new Player(name1, 'X');
             players2 = new Player(name2, 'O');
@@ -176,35 +197,53 @@ let playerManipulation = (() => {
             let player1 = document.getElementById('X');
             let name1 = player1.value.trim();
 
+            if (!name1) {
+                return;
+            }
+
+            scores.push({ name: capitalFirstWord(name1), score: 0 });
+            scores.push({ name: 'Computer', score: 0 });
+
+            updateScores();
+
             players1 = new Player(name1, 'X');
 
             activePlayer = players1;
 
-            Ai = new ComputerPlayer();
+            Computer = new ComputerPlayer();
         }
     });
+
+    let updateScoresAfterWin = (name) => {
+        scores.forEach((item) => {
+            if (item.name === name) {
+                item.score += 1;
+                updateScores();
+            }
+        });
+    };
 
     let activePlayer = players1;
 
     let getActivePlayer = () => activePlayer;
-    let getIsTwoPlayer = () => two_Player;
+    let getIsTwoPlayer = () => twoPlayer;
     let newGamePosition = () => (activePlayer = players1);
-    let getAi = () => Ai;
+    let getComputer = () => Computer;
 
     const switchPlayerTurn = () => {
         if (gameBoard.gameResult()) {
             return;
         }
 
-        if (two_Player) {
+        if (twoPlayer) {
             activePlayer = activePlayer === players1 ? players2 : players1;
         } else {
-            activePlayer = activePlayer === players1 ? Ai : players1;
+            activePlayer = activePlayer === players1 ? Computer : players1;
 
-            if (activePlayer.name === Ai.name) {
+            if (activePlayer.name === Computer.name) {
                 setTimeout(() => {
                     gameControl().makeMove(gameBoard.getGameBoard());
-                    gameBoard.gameStatus(Ai.name);
+                    gameBoard.gameStatus(Computer.name);
                     switchPlayerTurn();
                 }, 500);
             }
@@ -212,7 +251,7 @@ let playerManipulation = (() => {
     };
 
     const switchPlayerCount = () => {
-        two_Player = two_Player === false ? true : false;
+        twoPlayer = twoPlayer === false ? true : false;
     };
 
     return {
@@ -221,8 +260,9 @@ let playerManipulation = (() => {
         switchPlayerTurn,
         newGamePosition,
         getIsTwoPlayer,
-        getAi,
+        getComputer,
         gameBoard,
+        updateScoresAfterWin,
     };
 })();
 
@@ -255,7 +295,7 @@ function gameControl() {
             let randomIndex = Math.floor(Math.random() * empty.length);
             let move = empty[randomIndex];
 
-            gameBoard.recordMove(move, playerManipulation.getAi().piece);
+            gameBoard.recordMove(move, playerManipulation.getComputer().piece);
             gameBoard.updateScreen();
         } else {
             return -1;
@@ -327,13 +367,38 @@ let gameSetUp = (() => {
     let playerButtonContainer = document.querySelector('.player-choice');
     let namesContainer = document.querySelector('.player-name-container');
     let floatGameName = document.querySelector('.game-name2');
+    let floatScoreBoard = document.querySelector('.scoreBoard');
     let greetingContainer = document.querySelector('.greeting-menu');
     let board = document.querySelector('.game-board');
     let leftArrow = document.querySelector('.svg-button');
     let inputElements = document.querySelectorAll('input');
     let items = document.querySelectorAll('.game-board div');
+    let newGameQuestionButtons = document.querySelectorAll(
+        '.newGameQuestionButtons button'
+    );
+    let newGameQuestionContainer = document.querySelector('.newGameQuestion');
 
-    let game = gameControl();
+    let newGameQuestionContainerToggle = () => {
+        if (newGameQuestionContainer.classList.contains('active')) {
+            newGameQuestionContainer.classList.remove('active');
+        } else {
+            newGameQuestionContainer.classList.add('active');
+        }
+    };
+
+    newGameQuestionButtons.forEach((item) => {
+        item.addEventListener('click', () => {
+            if (item.innerHTML === 'No') {
+                newGameQuestionContainerToggle();
+            } else {
+                location.reload();
+            }
+        });
+    });
+
+    floatGameName.addEventListener('click', () => {
+        newGameQuestionContainerToggle();
+    });
 
     playerButtons.forEach((button) => {
         button.addEventListener('click', (e) => {
@@ -382,7 +447,8 @@ let gameSetUp = (() => {
         greetingContainer.style.left = '-150%';
         board.classList.add('right-screen');
 
-        floatGameName.classList.add('float-top-left');
+        floatGameName.classList.add('float-top');
+        floatScoreBoard.classList.add('float-top');
     });
 
     leftArrow.addEventListener('click', () => {
@@ -407,5 +473,5 @@ let gameSetUp = (() => {
         }, 680);
     });
 
-    return { items, resetButton };
+    return { items, resetButton, floatScoreBoard };
 })();

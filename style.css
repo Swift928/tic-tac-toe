@@ -5,6 +5,9 @@ body {
     margin: 0;
     box-sizing: border-box;
     overflow: hidden;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI',
+        Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue',
+        sans-serif;
 }
 
 body,
@@ -113,17 +116,77 @@ input::placeholder {
     transition: opacity 0.7s ease-in-out;
 }
 
-.game-name2 {
+.game-name2,
+.scoreBoard {
     position: absolute;
     font-size: 1.5rem;
     top: 5px;
-    left: 5px;
     transform: translate(0, -100%);
     transition: transform 0.7s ease-in-out;
 }
 
-.float-top-left {
+.game-name2 {
+    left: 5px;
+}
+
+.float-top {
     transform: translate(0, 0);
+}
+
+.newGameQuestion {
+    display: none;
+    position: absolute;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.857);
+    z-index: 20;
+    flex-direction: column;
+    align-items: center;
+}
+
+.newGameQuestion.active {
+    animation: onlyAnimation 350ms ease-in-out;
+    display: flex;
+    opacity: 1;
+}
+
+@keyframes onlyAnimation {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+.newGameQuestion p:first-child {
+    margin-top: 35vh;
+}
+
+.newGameQuestion p {
+    text-align: center;
+    font-size: x-large;
+    color: #f86200;
+    margin-top: 20px;
+}
+.newGameQuestionButtons {
+    display: flex;
+    gap: 10px;
+    margin-top: 30px;
+}
+
+.newGameQuestionButtons button {
+    background: linear-gradient(320deg, #ffcc00, #ff6600);
+    font-size: 20px;
+    padding: 8px 15px;
+    border-radius: 25%;
+    width: 100px;
+    border: none;
+}
+
+.scoreBoard {
+    right: 5px;
+    text-align: end;
+    padding-right: 10px;
 }
 
 .left-screen {
